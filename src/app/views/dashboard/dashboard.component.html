@@ -1,0 +1,220 @@
+<!-- <div class="cart-item" *ngIf="newPrice; else Price">
+  <h1 style="display: flex; justify-content: center; flex-direction: row">
+    cart-items
+  </h1>
+<p>user point : {{customerPoint}}</p>
+  <table cTable>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of products; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item.name }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.qty }}</td>
+        <td>฿ {{ item.price | number }}</td>
+      </tr>
+
+      <tr>
+        <td colSpan="4">Total Price / Final Price</td>
+        <td>฿ {{ discountPrice | number }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
+<div class="container">
+  <div
+    class="cart-item"
+    style="
+      padding: 10px;
+      background-color: #fdfdfd;
+      border-radius: 5px;
+      box-shadow: 4px 4px 7px #b3b3b3;
+      margin-bottom: 1rem;
+    "
+  >
+    <h1 class="b" style="display: flex; justify-content: center; flex-direction: row">
+      cart-items
+    </h1>
+
+    <p class="b">user point : {{ customerPoint }}</p>
+
+    <table cTable>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Qty</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of products; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.qty }}</td>
+          <td>฿ {{ item.price | number }}</td>
+        </tr>
+
+        <tr>
+          <td colSpan="4">Total Price</td>
+          <td>฿ {{ TotalPrice | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="steps" style="display: flex; flex-direction: column">
+      <h6 class="b">promotions</h6>
+
+      <div
+        class="txt"
+        style="margin-right: 20px; margin-top: 0; margin-bottom: 10px"
+      >
+        <ng-container>
+          <div
+            *ngFor="let item of _step; index as i"
+            class="txt-grouop"
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin: 0 10px;
+            "
+          >
+            <p class="b">- {{ item.name }}</p>
+            <p class="b">Discount Amount : ฿{{ item.discount_price  | number}}</p>
+          </div>
+<div
+
+            class="txt-grouop"
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin: 0 10px;
+            "
+          >
+            <h5 class="b" style="font-weight: bold;">Final price : </h5>
+            <h5 class="b" style="font-weight: bold;">฿{{grandPrice | number}}</h5>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="coupons"
+    style="
+      padding: 10px;
+      background-color: #fdfdfd;
+      border-radius: 5px;
+      box-shadow: 4px 4px 7px #b3b3b3;
+    "
+  >
+    <ng-container *ngIf="cardsItem.length >= 1">
+      <h4 class="b">Discount</h4>
+      <c-row
+        style="
+          margin: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        "
+        [sm]="4"
+      >
+        <button
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+          *ngFor="let item of cardsItem; index as i"
+          cButton
+          [cTooltip]="item.info"
+          cTooltipPlacement="top"
+          class="me-1"
+          color="secondary"
+          (click)="removeDiscount(item)"
+        >
+          {{ item.name }}
+
+          <svg [cIcon]="icons.cilTrash"></svg>
+        </button>
+      </c-row>
+    </ng-container>
+
+    <c-row>
+      <!-- <ng-container *ngIf="_coupon"> -->
+      <c-col [sm]="4" *ngFor="let item of coupons">
+        <c-card class="md-4 mg">
+          <c-card-body>
+            <h5 cCardTitle>{{ item.name }}</h5>
+            <p>{{ item.category }}</p>
+            <p cCardText>Discount : {{ item.desc }}</p>
+            <button
+              *ngIf="_coupon"
+              (click)="getCoupon(item)"
+              cButton
+              color="primary"
+            >
+              Use This coupon
+            </button>
+          </c-card-body>
+        </c-card>
+      </c-col>
+      <!-- </ng-container> -->
+      <!-- <ng-container *ngIf="_onTop"> -->
+      <c-col [sm]="4" *ngFor="let item of onTops">
+        <c-card class="md-4 mg">
+          <c-card-body>
+            <h5 cCardTitle>{{ item.name }}</h5>
+            <p>{{ item.category }}</p>
+            <p cCardText>Discount : {{ item.desc }}</p>
+            <button
+              *ngIf="_onTop"
+              (click)="getOnTop(item)"
+              cButton
+              color="primary"
+            >
+              Use This coupon
+            </button>
+          </c-card-body>
+        </c-card>
+      </c-col>
+      <!-- </ng-container -->
+
+      <!-- <ng-container *ngIf="_seasonal"> -->
+      <c-col [sm]="4" *ngFor="let item of seasonals">
+        <c-card class="md-4 mg">
+          <c-card-body>
+            <h5 cCardTitle>{{ item.name }}</h5>
+            <p>{{ item.category }}</p>
+            <p cCardText>Discount : {{ item.desc }}</p>
+            <button
+              *ngIf="_seasonal"
+              (click)="getSeasonal(item)"
+              cButton
+              color="primary"
+            >
+              Use This coupon
+            </button>
+          </c-card-body>
+        </c-card>
+      </c-col>
+      <!-- </ng-container> -->
+    </c-row>
+  </div>
+
+  <!-- <div class="dpf">
+    <button cButton color="primary" (click)="submit()">Submit Discount</button>
+  </div> -->
+</div>
